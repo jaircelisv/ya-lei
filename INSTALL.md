@@ -87,8 +87,10 @@ Do NOT give the user shell commands. Do this instead:
    ```
    fetch https://raw.githubusercontent.com/jaircelisv/ya-lei/main/INSTALL.md and follow the instructions. Config: top_active=4, language=es, delivery=dashboard, recipient=user@example.com, schedule=07:00
    ```
-   …with the config values replaced by THEIR answers. The local agent will
-   do the entire install without asking twice.
+   …with the config values replaced by THEIR answers, and the sentence
+   written in THEIR language (e.g. Spanish: `lee <url> y sigue las
+   instrucciones. Config: …`). The local agent will do the entire install
+   without asking twice.
 3. **No computer access at all?** (phone-only, claude.ai only, no WhatsApp
    Desktop): build the uploadable skill instead —
    - Download https://github.com/jaircelisv/ya-lei/archive/refs/heads/main.zip

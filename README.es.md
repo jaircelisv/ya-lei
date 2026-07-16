@@ -7,7 +7,7 @@
 **⚡ Instalación en una línea** — pega esto en Claude (Cowork, Claude Code o claude.ai):
 
 ```
-fetch https://raw.githubusercontent.com/jaircelisv/ya-lei/main/INSTALL.md and follow the instructions
+lee https://raw.githubusercontent.com/jaircelisv/ya-lei/main/INSTALL.md y sigue las instrucciones
 ```
 
 Claude detecta dónde está corriendo, instala de la forma correcta y te acompaña en la configuración — nunca tocas una terminal. **En Cowork, pégalo en una tarea corriendo "En tu computador"** (ahí es donde vive tu WhatsApp); si lo pegas en la nube, Claude recoge tus preferencias y te devuelve una sola línea personalizada para la tarea local. ¿Prefieres hacerlo a mano? Mira [Instalación](#instalación) abajo.
