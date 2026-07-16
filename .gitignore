@@ -1,0 +1,21 @@
+# Personal configuration (contains your group names / email)
+config.json
+
+# Generated digests and dashboard — they contain YOUR chat content. Never commit.
+digests/*
+!digests/.gitkeep
+dashboard/index.html
+
+# WhatsApp exports dropped for fallback mode — personal data. Never commit.
+exports/*
+!exports/.gitkeep
+
+# Database copies / probes
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+
+# OS noise
+.DS_Store
+__pycache__/
+*.pyc

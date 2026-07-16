@@ -1,0 +1,17 @@
+{
+  "groups": ["Familia", "Equipo Proyecto X"],
+  "top_active": 0,
+  "hours": 24,
+  "digest_language": "es",
+  "delivery": ["gmail", "dashboard"],
+  "recipient": "you@example.com",
+  "max_messages_per_group": 500,
+  "notes": {
+    "groups": "Group names (or unambiguous fragments). Matching is case- and accent-insensitive.",
+    "top_active": "Alternative to 'groups': set to N > 0 to auto-pick the N most active groups of the window. If both are set, 'groups' wins.",
+    "hours": "Look-back window for each digest. 24 for a daily digest, 168 for weekly.",
+    "digest_language": "Language Claude writes the digest in: 'es', 'en', or any language name.",
+    "delivery": "Any of: 'gmail' (needs the Gmail connector in Cowork), 'dashboard' (local HTML). The digest is always saved to digests/ as markdown regardless.",
+    "recipient": "Where the Gmail delivery goes. Use YOUR OWN address — this skill is designed to report only to you."
+  }
+}
