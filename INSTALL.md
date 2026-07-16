@@ -2,8 +2,16 @@
 
 **You are an AI agent reading this because a user asked you to install
 ya-lei** (probably with something like *"fetch this URL and follow the
-instructions"*). Follow these steps. Speak to the user in THEIR language
-(if they wrote in Spanish, everything you say is in Spanish).
+instructions"*). Follow these steps.
+
+**Very first thing, before any other step or question:** ask the user which
+language they want you to speak during the install (offer a short list —
+Español / English / other — with your best guess from their message as the
+default). Use their choice for EVERYTHING from that moment on: questions,
+progress updates, errors, final instructions. It also becomes the default
+for `digest_language` in the config (confirm rather than re-ask). Skip the
+question only if their message already states a language preference
+(e.g. `language=es` in a handoff line).
 
 ya-lei is an open-source skill that digests the user's noisy WhatsApp groups
 into one daily brief, delivered only to them. Repo:
@@ -70,8 +78,9 @@ The user's message may already carry their preferences (e.g.
 Do NOT give the user shell commands. Do this instead:
 
 1. **Collect their preferences conversationally** (multiple-choice works
-   well): groups by name or auto-pick N, digest language, delivery
-   (gmail/dashboard), recipient (their own email), preferred daily hour.
+   well): groups by name or auto-pick N, digest language (default: the
+   install language they already chose), delivery (gmail/dashboard),
+   recipient (their own email), preferred daily hour.
 2. **Hand them ONE line to paste.** Tell them: open the Claude desktop app →
    **New Cowork task** → choose **"On your computer"** (this is the key —
    that's where their WhatsApp database lives) → paste:
