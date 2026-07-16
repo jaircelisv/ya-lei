@@ -10,7 +10,7 @@
 fetch https://raw.githubusercontent.com/jaircelisv/ya-lei/main/INSTALL.md and follow the instructions
 ```
 
-Claude detects where it's running, installs the right way, and walks you through setup — you never touch a terminal. **In Cowork, paste it into a task running "On your computer"** (that's where your WhatsApp lives); if you paste it in the cloud, Claude will collect your preferences and hand you back one personalized line for the local task. Prefer doing it by hand? See [Install](#install) below.
+Claude detects where it's running, installs the right way, and walks you through setup — you never touch a terminal. **In Claude Code (macOS)** you get the zero-friction daily digest. **In Cowork or claude.ai** Claude builds you an uploadable skill that digests exported chats on demand — Cowork's sandbox can't reach the WhatsApp database, and the installer is honest about it. Prefer doing it by hand? See [Install](#install) below.
 
 **Ya Leí** ("already read") is an open-source [Agent Skill](https://claude.com/skills) for **Claude Cowork** (and Claude Code) that digests your noisiest WhatsApp groups into one daily brief — decisions made, questions you were asked, dates and commitments, and a one-line summary of the noise — delivered **to you and only you**, by Gmail or a local dashboard.
 
@@ -64,11 +64,11 @@ ChatStorage.sqlite  ──┐                  exported .txt chats ──┐
 
 ## Compatibility
 
-| Platform | Mode | Status |
+| Surface | Mode | Status |
 |---|---|---|
-| macOS + WhatsApp Desktop (App Store) | local database (zero friction) | ✅ verified |
-| Windows / Linux | exported `.txt` fallback | ✅ works (15-second export ritual) |
-| Phone-only | exported `.txt` fallback | ✅ works |
+| Claude Code on macOS + WhatsApp Desktop | local database (zero friction, scheduled daily) | ✅ verified |
+| Claude Cowork (any OS) | exported `.txt`, on demand | ✅ works — Cowork runs in an isolated VM that cannot reach the WhatsApp database, so exports are the honest path |
+| claude.ai / phone-only / Windows / Linux | exported `.txt`, on demand | ✅ works (15-second export ritual) |
 
 The WhatsApp database schema is undocumented and may change with app updates. If it does, the skill fails loudly and the export fallback keeps working.
 

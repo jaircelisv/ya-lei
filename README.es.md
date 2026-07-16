@@ -10,7 +10,7 @@
 lee https://raw.githubusercontent.com/jaircelisv/ya-lei/main/INSTALL.md y sigue las instrucciones
 ```
 
-Claude detecta dónde está corriendo, instala de la forma correcta y te acompaña en la configuración — nunca tocas una terminal. **En Cowork, pégalo en una tarea corriendo "En tu computador"** (ahí es donde vive tu WhatsApp); si lo pegas en la nube, Claude recoge tus preferencias y te devuelve una sola línea personalizada para la tarea local. ¿Prefieres hacerlo a mano? Mira [Instalación](#instalación) abajo.
+Claude detecta dónde está corriendo, instala de la forma correcta y te acompaña en la configuración — nunca tocas una terminal. **En Claude Code (macOS)** obtienes el digest diario cero-fricción. **En Cowork o claude.ai** Claude te construye un skill subible que digiere chats exportados bajo demanda — el sandbox de Cowork no puede alcanzar la base de datos de WhatsApp, y el instalador es honesto al respecto. ¿Prefieres hacerlo a mano? Mira [Instalación](#instalación) abajo.
 
 **Ya Leí** es un [Agent Skill](https://claude.com/skills) open source para **Claude Cowork** (y Claude Code) que convierte tus grupos de WhatsApp más ruidosos en un resumen diario — decisiones tomadas, preguntas que te hicieron, fechas y compromisos, y una línea resumiendo el ruido — entregado **a ti y solo a ti**, por Gmail o en un dashboard local.
 
@@ -64,11 +64,11 @@ ChatStorage.sqlite  ──┐                  chats exportados .txt ──┐
 
 ## Compatibilidad
 
-| Plataforma | Modo | Estado |
+| Superficie | Modo | Estado |
 |---|---|---|
-| macOS + WhatsApp Escritorio (App Store) | base de datos local (cero fricción) | ✅ verificado |
-| Windows / Linux | fallback de export `.txt` | ✅ funciona (ritual de 15 segundos) |
-| Solo teléfono | fallback de export `.txt` | ✅ funciona |
+| Claude Code en macOS + WhatsApp Escritorio | base de datos local (cero fricción, programado diario) | ✅ verificado |
+| Claude Cowork (cualquier OS) | export `.txt`, bajo demanda | ✅ funciona — Cowork corre en una VM aislada que no puede alcanzar la base de WhatsApp; los exports son el camino honesto |
+| claude.ai / solo teléfono / Windows / Linux | export `.txt`, bajo demanda | ✅ funciona (ritual de 15 segundos) |
 
 El esquema de la base de datos de WhatsApp no está documentado y puede cambiar con actualizaciones. Si eso pasa, el skill falla en voz alta y el fallback de export sigue funcionando.
 
