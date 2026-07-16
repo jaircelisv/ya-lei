@@ -4,6 +4,14 @@
 
 > Your WhatsApp groups, already read.
 
+**⚡ One-line install** — paste this into Claude (Cowork, Claude Code, or claude.ai):
+
+```
+fetch https://raw.githubusercontent.com/jaircelisv/ya-lei/main/INSTALL.md and follow the instructions
+```
+
+Claude detects where it's running, installs the right way, and walks you through setup. Prefer doing it by hand? See [Install](#install) below.
+
 **Ya Leí** ("already read") is an open-source [Agent Skill](https://claude.com/skills) for **Claude Cowork** (and Claude Code) that digests your noisiest WhatsApp groups into one daily brief — decisions made, questions you were asked, dates and commitments, and a one-line summary of the noise — delivered **to you and only you**, by Gmail or a local dashboard.
 
 No bots joining your groups. No WhatsApp API. No messages leaving your machine. It reads what's already sitting on your own disk.
