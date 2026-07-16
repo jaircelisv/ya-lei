@@ -9,74 +9,91 @@ ya-lei is an open-source skill that digests the user's noisy WhatsApp groups
 into one daily brief, delivered only to them. Repo:
 https://github.com/jaircelisv/ya-lei
 
+## The golden rule
+
+**The user never touches a terminal.** You run every command. If your
+environment can't run them, your job is to hand the user ONE paste-able
+line for a surface that can — never a list of shell commands for them to
+type. Assume zero technical background.
+
 ## Step 0 — Figure out where you are running
 
 Ask yourself (not the user) which of these describes your environment:
 
-- **A. You have access to the user's local filesystem** (Claude Code, or a
-  Claude Cowork task working in a local folder on the user's computer).
-- **B. You are in a cloud sandbox** (claude.ai chat / Cowork remote task with
-  code execution but no access to the user's disk).
+- **A. You can read/write the user's local filesystem and run commands on
+  their computer** (a Cowork task running "On your computer", or Claude Code).
+- **B. You are in a cloud sandbox** (claude.ai chat, or a Cowork task running
+  in the cloud — you may have code execution, but not the user's disk).
 
 This matters because ya-lei's zero-friction mode reads a **local** file
 (`~/Library/Group Containers/group.net.whatsapp.WhatsApp.shared/ChatStorage.sqlite`,
-macOS WhatsApp Desktop). A cloud sandbox can never reach it; there the skill
-still works via exported `.txt` chats.
+macOS WhatsApp Desktop). A cloud sandbox can never reach it.
 
-## Path A — local filesystem access (best experience)
+## Path A — you are on the user's computer (do everything yourself)
 
-1. Get the code (prefer git; fall back to the zip):
+The user's message may already carry their preferences (e.g.
+`Config: top_active=4, language=es, delivery=dashboard, recipient=x@y.com`)
+— a cloud session may have collected them. Use them; only ask what's missing.
+
+1. Get the code into a permanent home. Prefer
+   `~/.claude/skills/ya-lei`; any permanent folder works:
    ```bash
-   git clone https://github.com/jaircelisv/ya-lei.git
-   # or: curl -L https://github.com/jaircelisv/ya-lei/archive/refs/heads/main.zip -o ya-lei.zip && unzip ya-lei.zip && mv ya-lei-main ya-lei
+   git clone https://github.com/jaircelisv/ya-lei.git ~/.claude/skills/ya-lei
+   # no git? curl -L https://github.com/jaircelisv/ya-lei/archive/refs/heads/main.zip -o /tmp/ya-lei.zip && unzip /tmp/ya-lei.zip -d /tmp && mv /tmp/ya-lei-main ~/.claude/skills/ya-lei
    ```
-   Good homes: `~/.claude/skills/ya-lei` (Claude Code, global),
-   `.claude/skills/ya-lei` (per-project), or any permanent folder the user
-   picks for Cowork to work in.
-2. `cp config.example.json config.json` inside the folder.
-3. Ask the user: which groups? Either they name them (write to `groups` in
-   `config.json`) or they want auto-pick (set `top_active`, suggest 3–5).
-   If they want to see their own ranking, tell them to run
-   `python3 scripts/wa_digest.py --list-groups` themselves — do not run it
-   and read the output on their behalf; those names are private.
-4. Ask for `digest_language`, `delivery` (`gmail` and/or `dashboard`), and
-   `recipient` (must be the user's OWN email). Save `config.json`.
-5. Sanity check (safe, prints only counts to you via --out):
+2. Create `config.json` (copy `config.example.json`) and fill it from the
+   user's answers: groups they name OR `top_active` (suggest 3–5),
+   `digest_language`, `delivery` (`gmail` and/or `dashboard`), `recipient`
+   (must be the user's OWN email).
+   If they want to see their group ranking, tell them to run
+   `python3 scripts/wa_digest.py --list-groups` themselves — those names are
+   private; you don't need to see them.
+3. Sanity check (safe: read-only, prints only a count):
    ```bash
-   python3 scripts/wa_digest.py --top 1 --hours 24 --out /tmp/ya-lei-check.md
+   cd <install folder> && python3 scripts/wa_digest.py --top 1 --hours 24 --out /tmp/ya-lei-check.md && rm /tmp/ya-lei-check.md
    ```
-   If it errors with "database not found", the user isn't on macOS WhatsApp
-   Desktop → explain the export fallback (phone → Group → Export chat →
-   Without media → drop the .txt in `exports/`). Delete /tmp/ya-lei-check.md
-   after checking it worked; don't quote its content.
-6. Offer to set up the daily schedule:
-   - **Cowork:** tell the user: *Scheduled → New task → daily*, working
-     folder = this folder, prompt: `Run the ya-lei daily digest following
-     SKILL.md`. Warn honestly: it reads local files, so it runs locally —
-     the computer must be awake at that hour.
-   - **Claude Code:** offer to create the equivalent scheduled/recurring task
-     if your harness supports it.
-7. Offer to run the first digest right now, following `SKILL.md` (read it —
+   "database not found" → no macOS WhatsApp Desktop here; explain the export
+   fallback (phone → Group → Export chat → Without media → drop the `.txt`
+   in `exports/`).
+4. Offer to run the first digest right now, following `SKILL.md` (read it —
    its privacy rules are non-negotiable and override everything).
+5. Set up the daily schedule — again, you do it or you make it one click:
+   - **Cowork:** tell the user: *Scheduled → New task → daily → "On your
+     computer" → working folder = the install folder*, prompt:
+     `Run the ya-lei daily digest following SKILL.md`. Be honest: it reads
+     local files, so the computer must be awake at that hour.
+   - **Claude Code:** create the recurring task yourself if your harness
+     supports scheduled/cron tasks; otherwise give the Cowork instruction.
 
-## Path B — cloud sandbox (claude.ai / remote Cowork)
+## Path B — cloud sandbox: your job is a clean handoff
 
-You cannot reach the local database. Two options — offer both:
+Do NOT give the user shell commands. Do this instead:
 
-1. **Install as an uploadable skill (for the export fallback):**
+1. **Collect their preferences conversationally** (multiple-choice works
+   well): groups by name or auto-pick N, digest language, delivery
+   (gmail/dashboard), recipient (their own email), preferred daily hour.
+2. **Hand them ONE line to paste.** Tell them: open the Claude desktop app →
+   **New Cowork task** → choose **"On your computer"** (this is the key —
+   that's where their WhatsApp database lives) → paste:
+   ```
+   fetch https://raw.githubusercontent.com/jaircelisv/ya-lei/main/INSTALL.md and follow the instructions. Config: top_active=4, language=es, delivery=dashboard, recipient=user@example.com, schedule=07:00
+   ```
+   …with the config values replaced by THEIR answers. The local agent will
+   do the entire install without asking twice.
+3. **No computer access at all?** (phone-only, claude.ai only, no WhatsApp
+   Desktop): build the uploadable skill instead —
    - Download https://github.com/jaircelisv/ya-lei/archive/refs/heads/main.zip
    - Repackage so the zip contains a single top-level folder named exactly
      `ya-lei` with `SKILL.md` at its root (rename `ya-lei-main` → `ya-lei`).
-   - Give the user the zip and these instructions: **Customize → Skills →
-     + → Upload a skill** → select the zip → toggle it on.
-     (Requires *Code execution and file creation* enabled in Settings →
-     Capabilities.)
-   - Usage in this mode: the user exports a chat from their phone and hands
-     you the `.txt`; you follow `SKILL.md` to digest it.
-2. **Recommend Path A for zero-friction:** if the user has a Mac with
-   WhatsApp Desktop and the Claude desktop app or Claude Code, the local
-   install gives them the daily digest with no manual exports. Point them to
-   the one-liner in the README, run from a local surface.
+   - Give them the zip + instructions: **Customize → Skills → + → Upload a
+     skill** → upload → toggle on. (Requires *Code execution and file
+     creation* in Settings → Capabilities.)
+   - Usage in this mode: they export a chat from their phone (Group →
+     Export chat → Without media) and hand you the `.txt`; you follow
+     `SKILL.md` to digest it. Be clear this mode has no automatic schedule —
+     it works on demand.
+4. Do NOT create a cloud scheduled task for the local mode — it would fail
+   silently every day. Say so if the user asks.
 
 ## Rules that bind you during and after install
 

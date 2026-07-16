@@ -10,7 +10,7 @@
 fetch https://raw.githubusercontent.com/jaircelisv/ya-lei/main/INSTALL.md and follow the instructions
 ```
 
-Claude detecta dónde está corriendo, instala de la forma correcta y te acompaña en la configuración. ¿Prefieres hacerlo a mano? Mira [Instalación](#instalación) abajo.
+Claude detecta dónde está corriendo, instala de la forma correcta y te acompaña en la configuración — nunca tocas una terminal. **En Cowork, pégalo en una tarea corriendo "En tu computador"** (ahí es donde vive tu WhatsApp); si lo pegas en la nube, Claude recoge tus preferencias y te devuelve una sola línea personalizada para la tarea local. ¿Prefieres hacerlo a mano? Mira [Instalación](#instalación) abajo.
 
 **Ya Leí** es un [Agent Skill](https://claude.com/skills) open source para **Claude Cowork** (y Claude Code) que convierte tus grupos de WhatsApp más ruidosos en un resumen diario — decisiones tomadas, preguntas que te hicieron, fechas y compromisos, y una línea resumiendo el ruido — entregado **a ti y solo a ti**, por Gmail o en un dashboard local.
 
